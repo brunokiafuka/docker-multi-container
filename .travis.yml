@@ -14,4 +14,9 @@ after_success:
   - docker build -t brunokiafuka/multi-server ./server
   - docker build -t brunokiafuka/multi-worker ./worker
   # Login to docker cli
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_ID" --password-stdin
   # push images to docker hub
+  - docker push brunokiafuka/multi-client
+  - docker push brunokiafuka/multi-nginx
+  - docker push brunokiafuka/multi-server
+  - docker push brunokiafuka/multi-worker
