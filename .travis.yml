@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t brunokiafuka/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true brunokiafuka/react-test yarn test
+
+after_success:
+  - docker build -t brunokiafuka/multi-client ./client
+  - docker build -t brunokiafuka/multi-nginx ./nginx
+  - docker build -t brunokiafuka/multi-server ./server
+  - docker build -t brunokiafuka/multi-worker ./worker
+  # Login to docker cli
+  # push images to docker hub
